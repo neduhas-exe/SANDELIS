@@ -572,12 +572,12 @@ public class CreditReport {
 }
 ```
 
-### 3.10 Išplėstinės Sandėlio Optimizacijos Sistema
+### 3.10 Išplėstinės Sandėlio Optimizacijos Sistema  (čia tik idiejas kuriu nerek mazam bizniou)
 
 #### 3.10.1 Sandėlio Optimizavimo Algoritmai
 ```ascii
 +----------------------------------------------------------+
-| SANDĖLIO OPTIMIZACIJOS VALDYMAS    🤖 AI-Powered          |
+| SANDĖLIO OPTIMIZACIJOS VALDYMAS           |
 +----------------------------------------------------------+
 | PREKIŲ IŠDĖSTYMAS              | JUDĖJIMO ANALIZĖ        |
 |------------------------------|--------------------------|

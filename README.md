@@ -1,97 +1,298 @@
+
+
+
+
+# Elektros Prekių Valdymo Sistema
+
+## 1. Projekto Struktūra
+
+```
 ElektrosPrekes/
-├── data/
-│   ├── csv/                         # Duomenys CSV formatu
-│   │   ├── klientai.csv             # Klientų informacija (įmonės, kontaktai, nuolaidos)
-│   │   ├── elektrikai.csv           # Elektrikų pagrindinė informacija
-│   │   ├── apsilankymai.csv         # Elektrikų apsilankymai (vietos, datos, pastabos)
-│   │   ├── produktai.csv            # Prekių katalogas
-│   │   ├── sandelys.csv             # Sandėlio būklė (prekių likučiai)
-│   │   ├── grazinimai.csv           # Grąžinimų įrašai
-│   │   ├── pajamavimai.csv          # Naujos prekės, pridėtos į sandėlį
-│   │   └── saskaitos.csv            # Išrašytos sąskaitos
-│   ├── photos/                      # Nuotraukos ir vizualiniai įrašai
-│   │   ├── grazinimai/              # Nuotraukos susijusios su grąžinimais
-│   │   └── apsilankymai/            # Elektrikų apsilankymų nuotraukos
-│   ├── backup/                      # Atsarginės kopijos
-│   └── templates/                   # Dokumentų/PDF šablonai
-├── src/
-│   ├── ElektrosPrekes.Core/         # Verslo logika
-│   │   ├── Entities/                # Domeno modeliai
-│   │   │   ├── Klientas.cs
-│   │   │   ├── Elektrikas.cs
-│   │   │   ├── Apsilankymas.cs
-│   │   │   ├── Produktas.cs
-│   │   │   ├── SandelioPreke.cs
-│   │   │   ├── Grazinimas.cs
-│   │   │   ├── Pajamavimas.cs
-│   │   │   └── Saskaita.cs
-│   │   ├── Interfaces/              # Sąsajos
-│   │   │   ├── IKlientasService.cs
-│   │   │   ├── IApsilankymasService.cs
-│   │   │   ├── ISandelisService.cs
-│   │   │   ├── IGrazinimasService.cs
-│   │   │   ├── IPajamavimasService.cs
-│   │   │   └── ISaskaitaService.cs
-│   │   ├── Services/                # Verslo logikos paslaugos
-│   │   ├── DTOs/                    # Duomenų perdavimo objektai
-│   │   ├── Enums/                   # Enuminacijos
-│   │   ├── Exceptions/              # Pasirinktinės klaidos
-│   │   └── Helpers/                 # Pagalbinės funkcijos (pvz., paieškos algoritmai)
-│   ├── ElektrosPrekes.Infrastructure/   # Infrastruktūros sluoksnis
-│   │   ├── Data/                        # Duomenų bazės prieiga
-│   │   │   ├── AppDbContext.cs
-│   │   │   ├── Configurations/
-│   │   │   ├── Migrations/
-│   │   │   ├── CsvRepository/           # CSV duomenų apdorojimas
-│   │   │   └── ElasticSearchService.cs  # Greitos paieškos įrankiai
-│   │   ├── Services/
-│   │   │   ├── QRService.cs             # QR kodų generavimas
-│   │   │   ├── PrintService.cs          # Spausdinimo funkcijos
-│   │   │   ├── SyncService.cs           # Sinchronizacija tarp CSV ir sistemos
-│   │   │   └── DiscountService.cs       # Nuolaidų taikymo logika
-│   │   ├── Extensions/
-│   │   └── Settings/
-│   ├── ElektrosPrekes.Api/              # API sluoksnis
+├── data/                           # Duomenų failai
+│   ├── csv/                       # CSV duomenų failai
+│   │   ├── klientai.csv          # ID,Kodas,Pavadinimas,Tipas,KreditoLimitas
+│   │   ├── elektrikai.csv        # ID,Kodas,Vardas,Pavarde,TelNr,Email
+│   │   ├── apsilankymai.csv      # ID,ElektrikasID,Data,Vieta,Pastabos
+│   │   ├── produktai.csv         # ID,Kodas,Pavadinimas,Kaina,VntTipas,Kategorija
+│   │   ├── sandelis.csv          # PrekeID,Kiekis,Vieta,Būsena,PaskutinisAtnaujinimas
+│   │   ├── saskaitos.csv         # NR,Data,KlientasID,Suma,PVM,Tipas,Būsena
+│   │   ├── grazinimai.csv        # NR,Data,SaskaitosNR,PrekeID,Kiekis,Priežastis
+│   │   └── lokacijos.csv         # ID,Zona,Lentyna,Vieta,MaxSvoris,Tipas
+│   ├── photos/                   # Nuotraukų saugykla
+│   │   ├── grazinimai/          # Grąžinimų foto įrodymai
+│   │   └── apsilankymai/        # Elektrikų apsilankymų foto
+│   └── templates/               # Dokumentų šablonai
+│       ├── saskaita.html       # Sąskaitos šablonas
+│       ├── grazinimas.html     # Grąžinimo akto šablonas
+│       └── sutartis.html       # Sutarties šablonas
+│
+├── src/                          # Pagrindinis projekto kodas
+│   ├── ElektrosPrekes.Core/        # Verslo logikos branduolys (.cs failai)
+│   │   ├── Constants/           # Sistemos konstantos
+│   │   │   ├── SystemSettings.cs    # Sistemos nustatymai
+│   │   │   ├── ErrorCodes.cs        # Klaidų kodai
+│   │   │   └── ValidationRules.cs    # Validacijos taisyklės
+│   │   │
+│   │   ├── Domain/              # Sistemos modeliai
+│   │   │   ├── Documents/      # Dokumentų modeliai
+│   │   │   │   ├── Base/
+│   │   │   │   │   ├── BaseDocument.cs           # Bazinė dokumentų klasė
+│   │   │   │   │   ├── DocumentMetadata.cs       # Dokumento metaduomenys
+│   │   │   │   │   └── DocumentValidation.cs     # Validacijos klasė
+│   │   │   │   ├── Invoice/
+│   │   │   │   │   ├── Invoice.cs                # Sąskaitos klasė
+│   │   │   │   │   ├── InvoiceLine.cs           # Sąskaitos eilutės
+│   │   │   │   │   └── InvoiceValidation.cs     # Sąskaitos validacija
+│   │   ├── Domain/                # Sistemos modeliai
+│   │   │   ├── Documents/        # Dokumentų modeliai
+│   │   │   │   ├── Base/
+│   │   │   │   ├── Invoice/
+│   │   │   │   └── Returns/
+│   │   │   ├── Warehouse/
+│   │   │   │   ├── Products/
+│   │   │   │   └── Stock/
+│   │   │   └── Electricians/
+│   │   ├── Interfaces/           # Sistemos sąsajos
+│   │   │   ├── IDocumentService.cs
+│   │   │   ├── IWarehouseService.cs
+│   │   │   └── IElectricianService.cs
+│   │   └── Services/             # Verslo logikos servisai
+│   │       ├── DocumentService.cs
+│   │       ├── WarehouseService.cs
+│   │       └── ElectricianService.cs
+│   │
+│   ├── ElektrosPrekes.Infrastructure/  # Infrastruktūra
+│   │   ├── Data/                    # Duomenų prieiga
+│   │   │   ├── Context/
+│   │   │   ├── Repositories/
+│   │   │   └── CSV/
+│   │   ├── Integration/            # Išorinės integracijos
+│   │   │   ├── Scales/
+│   │   │   ├── QR/
+│   │   │   └── Printing/
+│   │   └── Services/               # Infrastruktūros servisai
+│   │
+│   ├── ElektrosPrekes.Api/         # API sluoksnis
 │   │   ├── Controllers/
-│   │   │   ├── KlientasController.cs
-│   │   │   ├── ElektrikasController.cs
-│   │   │   ├── ApsilankymasController.cs
-│   │   │   ├── SandelisController.cs
-│   │   │   ├── GrazinimasController.cs
-│   │   │   └── SaskaitaController.cs
 │   │   ├── Middleware/
-│   │   ├── Filters/
-│   │   ├── Program.cs
-│   │   ├── Startup.cs
-│   │   └── appsettings.json
-│   ├── ElektrosPrekes.UI/               # Naudotojo sąsaja
-│   │   ├── Pages/
-│   │   ├── Components/
-│   │   ├── Layouts/
-│   │   ├── Services/
-│   │   ├── wwwroot/
-│   │   └── Assets/
-├── tests/
+│   │   └── Models/
+│   │
+│   └── ElektrosPrekes.Shared/      # Bendri komponentai
+│       ├── Constants/
+│       └── Helpers/
+│
+├── tests/                         # Testavimo projektai
 │   ├── ElektrosPrekes.UnitTests/
+│   │   ├── Core/
+│   │   │   ├── DocumentTests/
+│   │   │   ├── WarehouseTests/
+│   │   │   └── ElectricianTests/
+│   │   └── Infrastructure/
+│   │       ├── DataTests/
+│   │       └── IntegrationTests/
+│   │
 │   └── ElektrosPrekes.IntegrationTests/
-├── docs/
-│   ├── api/
+│
+├── docs/                          # Dokumentacija
 │   ├── architecture/
-│   └── how-to/
-├── tools/
-│   ├── scripts/
-│   │   ├── generate-reports.ps1
-│   │   └── backup-data.sh
-│   └── devtools/
-├── .gitignore
-├── README.md
-├── ElektrosPrekes.sln
-└── docker-compose.yml
+│   ├── api/
+│   └── deployment/
+│
+└── tools/                         # Įrankiai ir skriptai
+    ├── deployment/              # Diegimo skriptai
+    │   ├── install.ps1         # Pagrindinis diegimo skriptas
+    │   ├── db-setup.sql        # DB sukūrimo skriptas
+    │   └── iis-config.ps1      # IIS konfigūracijos skriptas
+    │
+    ├── migration/              # Duomenų migracijos įrankiai
+    │   ├── csv-import.ps1      # CSV importavimo įrankis
+    │   ├── data-cleanup.ps1    # Duomenų valymo įrankis
+    │   └── validation.ps1      # Duomenų validacijos įrankis
+    │
+    └── maintenance/            # Priežiūros įrankiai
+        ├── backup.ps1          # Atsarginių kopijų skriptas
+        ├── cleanup.ps1         # Valymo skriptas
+        └── monitor.ps1         # Monitoringo skriptas
+    ├── deployment/
+    └── migration/
+```
 
+## 2. Pagrindiniai Sistemos Moduliai
 
+### 2.1 Dokumentų Valdymo Modulis
+```csharp
+public abstract class BaseDocument
+{
+    public string Id { get; set; }
+    public string Number { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DocumentStatus Status { get; set; }
+}
 
-# Elektros Prekių Valdymo Sistema v1.0
+public interface IDocumentService
+{
+    Task<T> CreateAsync<T>(T document) where T : BaseDocument;
+    Task<T> UpdateAsync<T>(string id, T document) where T : BaseDocument;
+    Task<bool> DeleteAsync(string id);
+}
+```
 
+### 2.2 Sandėlio Valdymo Modulis
+```csharp
+public class Product
+{
+    public string Id { get; set; }
+    public string Code { get; set; }
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+}
+
+public interface IWarehouseService
+{
+    Task<Stock> GetStockAsync(string productId);
+    Task<bool> UpdateStockAsync(string productId, decimal quantity);
+    Task<WeightResult> WeighProductAsync(string productId);
+}
+```
+
+### 2.3 Elektrikų Valdymo Modulis
+```csharp
+public class Electrician
+{
+    public string Id { get; set; }
+    public string Code { get; set; }
+    public string Name { get; set; }
+    public decimal CreditLimit { get; set; }
+}
+
+public interface IElectricianService
+{
+    Task<Electrician> GetByIdAsync(string id);
+    Task<bool> UpdateCreditLimitAsync(string id, decimal limit);
+    Task<List<ElectricianList>> GetListsAsync(string electricianId);
+}
+```
+
+## 3. Duomenų Struktūros
+
+### 3.1 Duomenų Bazės Schema
+```sql
+CREATE TABLE Documents (
+    Id NVARCHAR(50) PRIMARY KEY,
+    Number NVARCHAR(20) UNIQUE,
+    Type NVARCHAR(10),
+    CreatedAt DATETIME,
+    Status INT
+);
+
+CREATE TABLE Products (
+    Id NVARCHAR(50) PRIMARY KEY,
+    Code NVARCHAR(20) UNIQUE,
+    Name NVARCHAR(200),
+    UnitType NVARCHAR(10),
+    Price DECIMAL(18,2)
+);
+
+CREATE TABLE Electricians (
+    Id NVARCHAR(50) PRIMARY KEY,
+    Code NVARCHAR(20) UNIQUE,
+    Name NVARCHAR(100),
+    CreditLimit DECIMAL(18,2)
+);
+```
+
+### 3.2 CSV Failų Struktūra
+```
+elektrikai.csv
+- ID,Kodas,Vardas,Pavarde,KreditoLimitas
+
+prekes.csv
+- ID,Kodas,Pavadinimas,Kaina,VntTipas
+
+sandelis.csv
+- PrekeID,Kiekis,Vieta,Busena
+```
+
+## 4. Sistemos Saugumas
+
+### 4.1 Vartotojų Teisės
+```csharp
+public enum UserRole
+{
+    Admin,
+    Accountant,
+    Warehouseman,
+    Salesperson
+}
+
+public interface ISecurityService
+{
+    Task<bool> HasPermissionAsync(string userId, string permission);
+    Task<UserContext> GetCurrentUserAsync();
+}
+```
+
+### 4.2 Duomenų Apsauga
+```csharp
+public interface IEncryptionService
+{
+    Task<string> EncryptAsync(string data);
+    Task<string> DecryptAsync(string encryptedData);
+}
+```
+
+## 5. Sistemos Monitoringas
+
+### 5.1 Veiklos Metrikos
+```csharp
+public interface IMonitoringService
+{
+    Task<SystemHealth> CheckHealthAsync();
+    Task<List<SystemMetric>> GetMetricsAsync();
+    Task LogEventAsync(SystemEvent eventData);
+}
+```
+
+### 5.2 Klaidų Sekimas
+```csharp
+public interface IErrorTracking
+{
+    Task LogErrorAsync(Exception ex, string context);
+    Task<List<ErrorLog>> GetErrorLogsAsync(DateTime from, DateTime to);
+}
+```
+
+## 6. Diegimo Instrukcijos
+
+### 6.1 Reikalavimai
+- .NET 7.0 SDK
+- SQL Server 2019+
+- Windows Server 2019/2022
+
+### 6.2 Diegimo Žingsniai
+1. Duomenų bazės sukūrimas
+2. Aplikacijos diegimas
+3. Servisų konfigūracija
+4. Testavimas
+
+## 7. Sistemos Plėtra
+
+### 7.1 Planuojami Patobulinimai
+- Mobili aplikacija
+- Išplėstinė analitika
+- Automatiniai užsakymai
+- Tiekėjų integracija
+
+### 7.2 Versijų Planas
+```mermaid
+gantt
+    title Sistemos Vystymas
+    dateFormat YYYY-MM-DD
+    section v1.0
+        Pagrindinės funkcijos :2024-03-01, 2024-04-01
+    section v2.0
+        Išplėtimas           :2024-04-01, 2024-05-01
+```
 ## 1. SISTEMOS APŽVALGA
 
 ### 1.1 Sistemos Paskirtis

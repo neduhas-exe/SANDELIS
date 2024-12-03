@@ -4,7 +4,7 @@ using System.Linq;
 using WarehouseSystem.Services.Interfaces;
 using Presentation.DTOs.Products;
 
-namespace WarehouseSystem.Application.Validation.BusinessRules
+namespace WarehouseSystem.Application.Validators
 {
     public class MovementBusinessRuleValidator
     {

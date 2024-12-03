@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WarehouseSystem.Application.Validation.BusinessRules
+namespace WarehouseSystem.Application.Validators
 {
     public static class BusinessRuleValidatorRegistration
     {

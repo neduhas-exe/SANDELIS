@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using WarehouseSystem.Services.Interfaces;
 
-namespace WarehouseSystem.Application.Validation.BusinessRules
+namespace WarehouseSystem.Application.Validators
 {
     public class ProductBusinessRuleValidator
     {

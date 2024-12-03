@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using WarehouseSystem.Services.Interfaces;
 
-namespace WarehouseSystem.Application.Validation.BusinessRules
+namespace WarehouseSystem.Application.Validators
 {
     public class QRCodeBusinessRuleValidator
     {

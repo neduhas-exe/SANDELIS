@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WarehouseSystem.Application.Validation.BusinessRules
+namespace WarehouseSystem.Application.Validators
 {
     public class ValidationResult
     {

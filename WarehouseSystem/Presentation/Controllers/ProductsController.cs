@@ -1,8 +1,6 @@
 ﻿using Application.Services.Interfaces;
 using Domain.Models;
-using Mapster;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.DTOs;
 
 namespace Presentation.Controllers
 {
@@ -17,21 +15,21 @@ namespace Presentation.Controllers
         public IActionResult Get(long id)
         {
             var product = _productsService.Get(id);
-            return Ok(product.Adapt<ProductDto>());
+            return Ok(product);
         }
 
         [HttpGet()]
         public IActionResult List()
         {
             var products = _productsService.List();
-            return Ok(products.Adapt<List<ProductDto>>());
+            return Ok(products);
         }
 
         [HttpPost()]
-        public IActionResult Create(ProductDto productDto)
+        public IActionResult Create(Product product)
         {
-            var product = _productsService.Create(productDto.Adapt<Product>());
-            return Ok(product);
+            var newProduct = _productsService.Create(product);
+            return Ok(newProduct);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Infrastructure.Repositories
     //CSV DB repository. Later should be replaced with a regular DB.
     public class ProductsRepository : IProductsRepository
     {
-        private const string _filePath = "C:/Test/products.csv";
+        private const string _filePath = "C:\\Users\\Justas\\Documents\\TempDB\\products.csv";
 
         public Product Get(long id)
         {

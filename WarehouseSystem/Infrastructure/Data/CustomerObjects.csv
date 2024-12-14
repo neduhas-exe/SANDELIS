@@ -1,0 +1,8 @@
+ObjectID,CustomerID,ObjectName,ObjectType,Address,City,PostalCode,ContactPerson,ContactPhone,Status,ProjectPhase,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate
+1,1,Verslo Centras Aurora,Commercial,"Savanorių pr. 28",Vilnius,LT-03116,Tomas Tomauskas,+37061111111,Active,Construction,ADMIN,2024-01-01,ADMIN,2024-03-15
+2,1,Residential Complex Pine,Residential,"Pušų g. 45",Vilnius,LT-04256,Ieva Ievaitė,+37062222222,Active,Planning,ADMIN,2024-01-01,SALES001,2024-03-18
+3,2,Butas Kaune,Apartment,"Ąžuolų g. 7-15",Kaunas,LT-44001,Jonas Jonaitis,+37061234567,Active,Renovation,ADMIN,2024-01-05,SALES001,2024-03-18
+4,2,Sodyba Giriose,House,"Miško g. 123",Kauno raj.,LT-44589,Jonas Jonaitis,+37061234567,Active,Maintenance,ADMIN,2024-02-15,ADMIN,2024-03-20
+5,3,Saulės Elektrinė,Industrial,"Pramonės g. 78",Kėdainiai,LT-57241,Rasa Rasaitė,+37063333333,Active,Installation,ADMIN,2024-01-10,ADMIN,2024-03-20
+6,3,Vėjo Jėgainių Parkas,Industrial,"Vėjo g. 1",Kretinga,LT-97001,Marius Mariauskas,+37064444444,Planned,Planning,ADMIN,2024-02-20,ADMIN,2024-03-22
+7,4,Namas Klaipėdoje,House,"Vytenio g. 12",Klaipėda,LT-92145,Petras Petraitis,+37069876543,Active,Finished,SALES002,2024-02-01,SALES002,2024-03-22

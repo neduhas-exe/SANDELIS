@@ -56,7 +56,7 @@ public class Product
     /// <summary>
     /// Produkto subkategorija
     /// </summary>
-    public string SubCategory { get; set; }
+    public SubCategories SubCategory { get; set; }
 
     /// <summary>
     /// Pirkimo kaina be PVM

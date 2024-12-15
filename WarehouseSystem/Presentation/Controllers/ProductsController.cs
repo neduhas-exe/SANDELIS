@@ -2,34 +2,33 @@
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.Controllers
+namespace Presentation.Controllers;
+
+//Temporary controller used to test functionality until front end is developed.
+[ApiController]
+[Route("products")]
+public class ProductsController(IProductsService productsService) : Controller
 {
-    //Temporary controller used to test functionality until front end is developed.
-    [ApiController]
-    [Route("products")]
-    public class ProductsController(IProductsService productsService) : Controller
+    private readonly IProductsService _productsService = productsService;
+
+    [HttpGet("{id}")]
+    public IActionResult Get(long id)
     {
-        private readonly IProductsService _productsService = productsService;
+        var product = _productsService.Get(id);
+        return Ok(product);
+    }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(long id)
-        {
-            var product = _productsService.Get(id);
-            return Ok(product);
-        }
+    [HttpGet()]
+    public IActionResult List()
+    {
+        var products = _productsService.List();
+        return Ok(products);
+    }
 
-        [HttpGet()]
-        public IActionResult List()
-        {
-            var products = _productsService.List();
-            return Ok(products);
-        }
-
-        [HttpPost()]
-        public IActionResult Create(Product product)
-        {
-            var newProduct = _productsService.Create(product);
-            return Ok(newProduct);
-        }
+    [HttpPost()]
+    public IActionResult Create(Product product)
+    {
+        var newProduct = _productsService.Create(product);
+        return Ok(newProduct);
     }
 }

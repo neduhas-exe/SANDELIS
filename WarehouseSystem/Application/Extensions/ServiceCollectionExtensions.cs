@@ -3,14 +3,14 @@ using Application.Services.Interfaces;
 using Infrastructure.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application.Extensions
+namespace Application.Extensions;
+
+//NOTE: Register services here.
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
+    public static void BootstrapApplication(this IServiceCollection services)
     {
-        public static void BootstrapApplication(this IServiceCollection services)
-        {
-            services.AddTransient<IProductsService, ProductsService>();
-            services.AddInfrastructure();
-        }
+        services.AddTransient<IProductsService, ProductsService>();
+        services.AddInfrastructure();
     }
 }

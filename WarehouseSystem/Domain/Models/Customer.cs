@@ -1,11 +1,13 @@
 // Domain/Models/Customer.cs
+using Domain.Common;
+
 namespace Domain.Models;
 
 /// <summary>
 /// Kliento modelis
 /// Saugo pagrindinę informaciją apie klientą
 /// </summary>
-public class Customer
+public class Customer : AuditableEntity
 {
     /// <summary>
     /// Unikalus kliento identifikatorius
@@ -66,16 +68,6 @@ public class Customer
     /// Žymi ar klientas aktyvus sistemoje
     /// </summary>
     public bool IsActive { get; set; } = true;
-
-    /// <summary>
-    /// Įrašo sukūrimo data
-    /// </summary>
-    public DateTime CreatedDate { get; set; }
-
-    /// <summary>
-    /// Įrašą sukūręs vartotojas
-    /// </summary>
-    public string CreatedBy { get; set; }
 
     // Navigacijos property į Site objektus
     public ICollection<Site> Sites { get; set; } = new List<Site>();

@@ -12,6 +12,7 @@ builder.Services.BootstrapApplication();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IAuditService, AuditService>();
+builder.Services.AddSingleton<IAuditService, AuditService>();
 
 
 var app = builder.Build();

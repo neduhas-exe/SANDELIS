@@ -1,0 +1,44 @@
+// Presentation/Controllers/SitesController.cs
+using Application.Services.Interfaces;
+using Domain.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Presentation.Controllers
+{
+    [ApiController]
+    [Route("sites")]
+    public class SitesController(ISitesService sitesService) : Controller
+    {
+        private readonly ISitesService _sitesService = sitesService;
+
+        /// <summary>
+        /// Gauti objektą pagal ID
+        /// </summary>
+        [HttpGet("{id}")]
+        public IActionResult Get(long id)
+        {
+            var site = _sitesService.Get(id);
+            return Ok(site);
+        }
+
+        /// <summary>
+        /// Gauti visų objektų sąrašą
+        /// </summary>
+        [HttpGet()]
+        public IActionResult List()
+        {
+            var sites = _sitesService.List();
+            return Ok(sites);
+        }
+
+        /// <summary>
+        /// Sukurti naują objektą
+        /// </summary>
+        [HttpPost()]
+        public IActionResult Create(Site site)
+        {
+            var newSite = _sitesService.Create(site);
+            return Ok(newSite);
+        }
+    }
+}

@@ -1,6 +1,10 @@
 // Domain/Models/Customer.cs
 namespace Domain.Models;
 
+/// <summary>
+/// Kliento modelis
+/// Saugo pagrindinę informaciją apie klientą
+/// </summary>
 public class Customer
 {
     /// <summary>
@@ -9,59 +13,57 @@ public class Customer
     public long Id { get; set; }
 
     /// <summary>
-    /// Kliento tipas (fizinis asmuo, UAB, etc.)
+    /// Kliento tipo identifikatorius
+    /// Nurodo kokio tipo yra klientas (fizinis asmuo, įmonė ir t.t.)
     /// </summary>
     public CustomerType CustomerType { get; set; }
 
     /// <summary>
-    /// Įmonės pavadinimas arba fizinio asmens vardas pavardė
+    /// Kliento pavadinimas
+    /// Įmonėms - įmonės pavadinimas
+    /// Fiziniams asmenims - vardas pavardė
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
-    /// Įmonės kodas (jei juridinis asmuo)
-    /// Null jei fizinis asmuo
+    /// Įmonės kodas
+    /// Null jeigu fizinis asmuo
     /// </summary>
     public string? CompanyCode { get; set; }
 
     /// <summary>
     /// PVM mokėtojo kodas
-    /// Null jei ne PVM mokėtojas
+    /// Null jeigu ne PVM mokėtojas
     /// </summary>
     public string? VATCode { get; set; }
 
     /// <summary>
-    /// Juridinis/Registracijos adresas
+    /// Juridinis/registracijos adresas
     /// </summary>
     public string LegalAddress { get; set; }
 
     /// <summary>
-    /// Pristatymo adresas (jei skiriasi nuo juridinio)
-    /// </summary>
-    public string? ShippingAddress { get; set; }
-
-    /// <summary>
-    /// Kontaktinio asmens vardas
+    /// Kontaktinis asmuo
     /// </summary>
     public string ContactPersonName { get; set; }
 
     /// <summary>
-    /// Kontaktinio asmens el. paštas
+    /// Kontaktinis el. paštas
     /// </summary>
     public string ContactEmail { get; set; }
 
     /// <summary>
-    /// Kontaktinio asmens telefono numeris
+    /// Kontaktinis telefonas
     /// </summary>
     public string ContactPhone { get; set; }
 
     /// <summary>
-    /// Kredito limitas eurais
+    /// Nustatytas kredito limitas
     /// </summary>
     public decimal CreditLimit { get; set; }
 
     /// <summary>
-    /// Ar klientas aktyvus
+    /// Žymi ar klientas aktyvus sistemoje
     /// </summary>
     public bool IsActive { get; set; } = true;
 
@@ -71,17 +73,10 @@ public class Customer
     public DateTime CreatedDate { get; set; }
 
     /// <summary>
-    /// Kas sukūrė įrašą
+    /// Įrašą sukūręs vartotojas
     /// </summary>
     public string CreatedBy { get; set; }
 
-    /// <summary>
-    /// Paskutinio atnaujinimo data
-    /// </summary>
-    public DateTime? LastModifiedDate { get; set; }
-
-    /// <summary>
-    /// Kas paskutinis atnaujino įrašą
-    /// </summary>
-    public string? LastModifiedBy { get; set; }
+    // Navigacijos property į Site objektus
+    public ICollection<Site> Sites { get; set; } = new List<Site>();
 }

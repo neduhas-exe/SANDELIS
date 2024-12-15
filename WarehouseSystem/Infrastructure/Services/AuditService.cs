@@ -1,27 +1,21 @@
 // Infrastructure/Services/AuditService.cs
 using Domain.Common;
-using Domain.Interfaces;
 
 namespace Infrastructure.Services;
 
 public class AuditService : IAuditService
 {
-    private readonly ICurrentUserService _currentUserService;
-
-    public AuditService(ICurrentUserService currentUserService)
-    {
-        _currentUserService = currentUserService;
-    }
-
+    private const string DEFAULT_USER = "neduhas-exe";
+    
     public void SetCreatedBy(AuditableEntity entity)
     {
-        entity.CreatedById = _currentUserService.UserId;
-        entity.CreatedDate = DateTime.UtcNow;
+        entity.CreatedBy = DEFAULT_USER;
+        entity.CreatedDate = DateTime.UtcNow; // 2024-12-15 20:07:29
     }
 
     public void SetModifiedBy(AuditableEntity entity)
     {
-        entity.ModifiedById = _currentUserService.UserId;
+        entity.ModifiedBy = DEFAULT_USER;
         entity.ModifiedDate = DateTime.UtcNow;
     }
 }

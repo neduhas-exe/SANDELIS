@@ -1,4 +1,3 @@
-// Path: WarehouseSystem/Application/Services/SitesService.cs
 using Application.Services.Interfaces;
 using Domain.Models;
 using Infrastructure.Repositories.Interfaces;
@@ -28,17 +27,5 @@ namespace Application.Services
         {
             return _siteRepository.Create(site);
         }
-
-        Site ISitesService.Get(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Site> ISitesService.List()
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
 }

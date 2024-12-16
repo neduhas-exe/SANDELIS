@@ -1,4 +1,8 @@
 // Path: WarehouseSystem/Application/Services/CustomersService.cs
+using Application.Services.Interfaces;
+using Domain.Models;
+using Infrastructure.Repositories.Interfaces;
+
 namespace Application.Services
 {
     public class CustomersService : ICustomersService

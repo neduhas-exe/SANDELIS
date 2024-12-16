@@ -39,4 +39,9 @@ public class User
     /// Paskutinio prisijungimo data
     /// </summary>
     public DateTime? LastLoginDate { get; set; }
+
+    public static implicit operator string(User v)
+    {
+        throw new NotImplementedException();
+    }
 }

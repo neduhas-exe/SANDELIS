@@ -1,3 +1,5 @@
+using Domain.Models;
+
 namespace Application.Services.Interfaces
 {
     /// <summary>
@@ -24,5 +26,6 @@ namespace Application.Services.Interfaces
         /// <param name="site">Naujo objekto duomenys</param>
         /// <returns>Sukurtas objekto duomenys</returns>
         Site Create(Site site);
+        object Create(global::Presentation.Controllers.Site site);
     }
 }

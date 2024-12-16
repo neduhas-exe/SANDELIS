@@ -1,5 +1,6 @@
 // Infrastructure/Services/AuditService.cs
 using Domain.Interfaces;
+using Domain.Models;
 
 namespace Infrastructure.Services;
 

@@ -1,48 +1,81 @@
 // Infrastructure/Repositories/UserRepository.cs
+using CsvHelper;
+using CsvHelper.Configuration;
 using Domain.Models;
-using Infrastructure.Interfaces;
+
 
 namespace Infrastructure.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly ApplicationDbContext _context;
-    
-    public UserRepository(ApplicationDbContext context)
+    private readonly string _filePath;
+    private readonly CsvConfiguration _csvConfig;
+
+    public UserRepository(string filePath)
     {
-        _context = context;
+        _filePath = filePath;
+        _csvConfig = new CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
+        {
+            HasHeaderRecord = true,
+        };
     }
-    
+
     public User GetById(long id)
     {
-        return _context.Users.Find(id);
+        var users = ReadUsersFromFile();
+        return users.FirstOrDefault(u => u.Id == id);
     }
-    
+
     public User GetByUsername(string username)
     {
-        return _context.Users.FirstOrDefault(u => u.UserName == username);
+        var users = ReadUsersFromFile();
+        return users.FirstOrDefault(u => u.UserName == username);
     }
-    
+
     public List<User> List()
     {
-        return _context.Users.Where(u => u.IsActive).ToList();
+        return ReadUsersFromFile().Where(u => u.IsActive).ToList();
     }
-    
+
     public User Create(User user)
     {
-        _context.Users.Add(user);
-        _context.SaveChanges();
+        var users = ReadUsersFromFile();
+        users.Add(user);
+        WriteUsersToFile(users);
         return user;
     }
-    
+
     public User Update(User user)
     {
-        var existingUser = _context.Users.Find(user.Id);
+        var users = ReadUsersFromFile();
+        var existingUser = users.FirstOrDefault(u => u.Id == user.Id);
         if (existingUser == null)
             return null;
-            
-        _context.Entry(existingUser).CurrentValues.SetValues(user);
-        _context.SaveChanges();
-        return existingUser;
+
+        users.Remove(existingUser);
+        users.Add(user);
+        WriteUsersToFile(users);
+        return user;
+    }
+
+    private List<User> ReadUsersFromFile()
+    {
+        if (!File.Exists(_filePath))
+            return new List<User>();
+
+        using (var reader = new StreamReader(_filePath))
+        using (var csv = new CsvReader(reader, _csvConfig))
+        {
+            return csv.GetRecords<User>().ToList();
+        }
+    }
+
+    private void WriteUsersToFile(List<User> users)
+    {
+        using (var writer = new StreamWriter(_filePath))
+        using (var csv = new CsvWriter(writer, _csvConfig))
+        {
+            csv.WriteRecords(users);
+        }
     }
 }

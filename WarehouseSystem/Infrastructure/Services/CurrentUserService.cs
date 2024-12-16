@@ -1,9 +1,18 @@
-// Infrastructure/Services/CurrentUserService.cs
-using Domain.Interfaces;
-using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
-namespace Infrastructure.Services;
+
+namespace Domain.Models;
+
+public interface IHttpContextAccessor
+{
+    HttpContext HttpContext { get; }
+}
+
+public interface ICurrentUserService
+{
+    long UserId { get; }
+    string UserName { get; }
+}
 
 public class CurrentUserService : ICurrentUserService
 {
@@ -18,17 +27,10 @@ public class CurrentUserService : ICurrentUserService
     {
         get
         {
-            // Čia reikėtų pritaikyti pagal jūsų autentifikacijos sistemą
-            var userId = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return userId != null ? long.Parse(userId) : 0;
+            var claim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
+            return claim != null ? long.Parse(claim.Value) : 0;
         }
     }
 
-    public string UserName
-    {
-        get
-        {
-            return _httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "System";
-        }
-    }
+    public string UserName => _httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "System";
 }

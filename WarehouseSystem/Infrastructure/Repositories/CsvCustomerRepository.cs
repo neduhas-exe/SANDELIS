@@ -1,4 +1,7 @@
 // Path: WarehouseSystem/Infrastructure/Repositories/CsvCustomerRepository.cs
+using Domain.Models;
+using Infrastructure.Repositories.Interfaces;
+
 public class CsvCustomerRepository : ICustomerRepository
 {
     private readonly CsvFileService _csvService;

@@ -1,5 +1,7 @@
 // Path: WarehouseSystem/Application/Services/Interfaces/ICustomersService.cs
 
+using Domain.Models;
+
 namespace Application.Services.Interfaces
 {
     /// <summary>

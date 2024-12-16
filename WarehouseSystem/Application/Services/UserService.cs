@@ -1,4 +1,6 @@
 // Application/Services/UserService.cs
+using Domain.Models;
+
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;

@@ -1,4 +1,6 @@
 // Application/Interfaces/IUserService.cs
+using Domain.Models;
+
 public interface IUserService
 {
     User GetById(long id);

@@ -2,6 +2,7 @@ using Application.Extensions;
 using Application.Services;
 using Application.Services.Interfaces;
 using Domain.Interfaces;
+using Domain.Models;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.Interfaces;
 using Infrastructure.Services;
@@ -18,7 +19,6 @@ builder.Services.BootstrapApplication();
 
 // Infrastructure services
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IAuditService, AuditService>();
 
 // Application services

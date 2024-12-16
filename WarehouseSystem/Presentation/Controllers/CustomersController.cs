@@ -1,6 +1,7 @@
 // Path: WarehouseSystem/Presentation/Controllers/CustomersController.cs
 
 using Application.Services.Interfaces;
+using Domain.Enums;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,52 +12,35 @@ namespace Presentation.Controllers
     /// </summary>
     [ApiController]  // Žymi, kad tai yra API kontroleris
     [Route("customers")]  // API endpoint pradžia, pvz: /customers
-    public class CustomersController : Controller
+    public class CustomersController : ControllerBase
     {
-        private readonly ICustomersService _customersService;
+        // Existing code...
+    }
+    public class Customer : AuditableEntity
+    {
+        public long Id { get; set; }
+        public CustomerType CustomerType { get; set; }
+        public string Name { get; set; }
+        public string? CompanyCode { get; set; }
+        public string? VATCode { get; set; }
+        public string LegalAddress { get; set; }
+        public string ContactPersonName { get; set; }
+        public string ContactEmail { get; set; }
+        public string ContactPhone { get; set; }
+        public decimal CreditLimit { get; set; }
+        public bool IsActive { get; set; } = true;
+        public ICollection<Site> Sites { get; set; }
+    }
 
-        /// <summary>
-        /// Konstruktorius su dependency injection
-        /// </summary>
-        /// <param name="customersService">Klientų serviso implementacija</param>
-        public CustomersController(ICustomersService customersService)
-        {
-            _customersService = customersService;
-        }
-
-        /// <summary>
-        /// Gauti konkretų klientą pagal ID
-        /// </summary>
-        /// <param name="id">Kliento ID</param>
-        /// <returns>Kliento informacija</returns>
-        [HttpGet("{id}")]  // GET /customers/{id}
-        public IActionResult Get(long id)
-        {
-            var customer = _customersService.Get(id);
-            return Ok(customer);  // Grąžina 200 OK su kliento duomenimis
-        }
-
-        /// <summary>
-        /// Gauti visų klientų sąrašą
-        /// </summary>
-        /// <returns>Klientų sąrašas</returns>
-        [HttpGet]  // GET /customers
-        public IActionResult List()
-        {
-            var customers = _customersService.List();
-            return Ok(customers);  // Grąžina 200 OK su klientų sąrašu
-        }
-
-        /// <summary>
-        /// Sukurti naują klientą
-        /// </summary>
-        /// <param name="customer">Naujo kliento duomenys</param>
-        /// <returns>Sukurto kliento informacija</returns>
-        [HttpPost]  // POST /customers
-        public IActionResult Create(Customer customer)
-        {
-            var newCustomer = _customersService.Create(customer);
-            return Ok(newCustomer);  // Grąžina 200 OK su sukurto kliento duomenimis
-        }
+    public class Site : AuditableEntity
+    {
+        public long Id { get; set; }
+        public long CustomerId { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string ContactPerson { get; set; }
+        public string ContactPhone { get; set; }
+        public bool IsActive { get; set; } = true;
+        public Customer Customer { get; set; }
     }
 }

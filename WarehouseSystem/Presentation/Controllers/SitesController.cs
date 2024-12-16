@@ -53,7 +53,7 @@ namespace Presentation.Controllers
         [HttpPost]  // POST /sites
         public IActionResult Create(Site site)
         {
-            var newSite = _sitesService.Create(site);
+            var newSite = _sitesService.Create(sitew);
             return Ok(newSite);  // Grąžina 200 OK su sukurto objekto duomenimis
         }
     }

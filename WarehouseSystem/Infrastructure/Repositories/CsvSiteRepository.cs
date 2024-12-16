@@ -36,29 +36,4 @@ public class CsvSiteRepository : ISiteRepository
         _csvService.WriteCsv(FileName, sites);
         return site;
     }
-
-    Site ISiteRepository.Get(long id)
-    {
-        throw new NotImplementedException();
-    }
-
-    List<Site> ISiteRepository.List()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Site Create(Site site)
-    {
-        throw new NotImplementedException();
-    }
-
-    Site ISiteRepository.Get(long id)
-    {
-        throw new NotImplementedException();
-    }
-
-    List<Site> ISiteRepository.List()
-    {
-        throw new NotImplementedException();
-    }
 }

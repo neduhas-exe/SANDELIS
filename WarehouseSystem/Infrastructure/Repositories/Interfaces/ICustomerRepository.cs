@@ -11,13 +11,3 @@ namespace Infrastructure.Repositories.Interfaces
     }
 }
 
-// Path: WarehouseSystem/Infrastructure/Repositories/Interfaces/ISiteRepository.cs
-namespace Infrastructure.Repositories.Interfaces
-{
-    public interface ISiteRepository
-    {
-        Site Get(long id);
-        List<Site> List();
-        Site Create(Site site);
-    }
-}

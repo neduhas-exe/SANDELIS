@@ -13,6 +13,10 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IAuditService, AuditService>();
 builder.Services.AddSingleton<IAuditService, AuditService>();
+builder.Services.AddScoped<ICustomersService, CustomersService>();
+builder.Services.AddScoped<ISitesService, SitesService>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ISiteRepository, SiteRepository>();
 
 
 var app = builder.Build();

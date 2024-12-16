@@ -15,11 +15,14 @@ builder.Services.AddScoped<IAuditService, AuditService>();
 builder.Services.AddSingleton<IAuditService, AuditService>();
 builder.Services.AddScoped<ICustomersService, CustomersService>();
 builder.Services.AddScoped<ISitesService, SitesService>();
-
+builder.Services.AddSingleton<CsvFileService>();
+builder.Services.AddScoped<IUserService, UserService>();
+/repos
 builder.Services.AddScoped<ICustomerRepository, CsvCustomerRepository>();
 builder.Services.AddScoped<ISiteRepository, CsvSiteRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-builder.Services.AddSingleton<CsvFileService>();
+
 
 
 var app = builder.Build();

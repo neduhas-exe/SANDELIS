@@ -1,29 +1,36 @@
 using Application.Extensions;
+using Application.Services;
+using Application.Services.Interfaces;
+using Domain.Interfaces;
+using Infrastructure.Repositories;
+using Infrastructure.Repositories.Interfaces;
+using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Bootstrap application services
 builder.Services.BootstrapApplication();
+
+// Infrastructure services
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IAuditService, AuditService>();
-builder.Services.AddSingleton<IAuditService, AuditService>();
+
+// Application services
 builder.Services.AddScoped<ICustomersService, CustomersService>();
 builder.Services.AddScoped<ISitesService, SitesService>();
-builder.Services.AddSingleton<CsvFileService>();
 builder.Services.AddScoped<IUserService, UserService>();
-/repos
+
+// Infrastructure repositories
+builder.Services.AddSingleton<CsvFileService>();
 builder.Services.AddScoped<ICustomerRepository, CsvCustomerRepository>();
 builder.Services.AddScoped<ISiteRepository, CsvSiteRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-
-
 
 var app = builder.Build();
 
@@ -35,7 +42,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

@@ -1,5 +1,5 @@
 // Infrastructure/Interfaces/IUserRepository.cs
-using Domain.Models;
+using YourNamespace.Models; // Add this using directive
 
 public interface IUserRepository
 {

@@ -1,4 +1,8 @@
 // Path: WarehouseSystem/Infrastructure/Repositories/CsvSiteRepository.cs
+using Domain.Models;
+using Infrastructure.Repositories.Interfaces;
+
+
 public class CsvSiteRepository : ISiteRepository
 {
     private readonly CsvFileService _csvService;
@@ -31,5 +35,30 @@ public class CsvSiteRepository : ISiteRepository
         sites.Add(site);
         _csvService.WriteCsv(FileName, sites);
         return site;
+    }
+
+    Site ISiteRepository.Get(long id)
+    {
+        throw new NotImplementedException();
+    }
+
+    List<Site> ISiteRepository.List()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Site Create(Site site)
+    {
+        throw new NotImplementedException();
+    }
+
+    Site ISiteRepository.Get(long id)
+    {
+        throw new NotImplementedException();
+    }
+
+    List<Site> ISiteRepository.List()
+    {
+        throw new NotImplementedException();
     }
 }

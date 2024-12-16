@@ -1,6 +1,6 @@
 // Domain/Models/Customer.cs
-using Domain.Common;
 
+using Domain.Enums;
 namespace Domain.Models;
 
 /// <summary>

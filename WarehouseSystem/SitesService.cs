@@ -27,5 +27,9 @@ namespace Application.Services
         {
             return _siteRepository.Create(site);
         }
+        public void CreatePresentation()
+        {
+        // Implementation of CreatePresentation
+        }
     }
 }

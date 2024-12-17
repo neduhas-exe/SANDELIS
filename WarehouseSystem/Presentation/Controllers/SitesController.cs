@@ -45,15 +45,12 @@ namespace Presentation.Controllers
             return Ok(sites);  // Grąžina 200 OK su objektų sąrašu
         }
 
-        /// <summary>
-        /// Sukurti naują objektą
-        /// </summary>
-        /// <param name="site">Naujo objekto duomenys</param>
-        /// <returns>Sukurto objekto informacija</returns>
+        // ... existing code ...
+
         [HttpPost]  // POST /sites
-        public IActionResult Create(Site site)
+        public IActionResult Create(Domain.Models.Site site)  // Change parameter type to Domain.Models.Site
         {
-            var newSite = _sitesService.Create(sitew);
+            var newSite = _sitesService.Create(site);
             return Ok(newSite);  // Grąžina 200 OK su sukurto objekto duomenimis
         }
     }

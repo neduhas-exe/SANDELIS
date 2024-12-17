@@ -1,12 +1,25 @@
-﻿using Application.Services.Interfaces;
-using Domain.Models;
+﻿using Domain.Interfaces;
 
 namespace Application.Services
 {
     public class CurrentUserService : ICurrentUserService
     {
-        // Hardcoded reikšmės testavimui
-        public long UserId => 1; // Grąžins fiksuotą ID = 1
-        public string UserName => "TestUser"; // Grąžins fiksuotą vardą "TestUser"
+        public string GetCurrentUserLogin()
+        {
+            // For testing purposes, return a hardcoded value
+            return "neduhas-exe";
+        }
+
+        public DateTime GetCurrentDateTime()
+        {
+            // Return UTC time for consistency
+            return DateTime.UtcNow;
+        }
+
+        public bool IsAuthenticated()
+        {
+            // For Swagger testing, always return true
+            return true;
+        }
     }
 }

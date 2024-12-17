@@ -1,36 +1,37 @@
+using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
-
-namespace Domain.Models;
-
-public interface IHttpContextAccessor
+namespace Domain.Models
 {
-    HttpContext HttpContext { get; }
-}
-
-public interface ICurrentUserService
-{
-    long UserId { get; }
-    string UserName { get; }
-}
-
-public class CurrentUserService : ICurrentUserService
-{
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
-    public CurrentUserService(IHttpContextAccessor httpContextAccessor)
+    public interface IHttpContextAccessor
     {
-        _httpContextAccessor = httpContextAccessor;
+        HttpContext HttpContext { get; }
     }
 
-    public long UserId
+    public interface ICurrentUserService
     {
-        get
+        long UserId { get; }
+        string UserName { get; }
+    }
+
+    public class CurrentUserService : ICurrentUserService
+    {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
-            var claim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
-            return claim != null ? long.Parse(claim.Value) : 0;
+            _httpContextAccessor = httpContextAccessor;
         }
-    }
 
-    public string UserName => _httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "System";
+        public long UserId
+        {
+            get
+            {
+                var claim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
+                return claim != null ? long.Parse(claim.Value) : 0;
+            }
+        }
+
+        public string UserName => _httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "System";
+    }
 }

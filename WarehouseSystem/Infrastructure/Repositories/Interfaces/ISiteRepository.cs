@@ -1,11 +1,9 @@
+// Path: WarehouseSystem/Infrastructure/Repositories/Interfaces/ISiteRepository.cs
 using Domain.Models;
 
-namespace Infrastructure.Repositories.Interfaces
+public interface ISiteRepository
 {
-    public interface ISiteRepository
-    {
-        Site Get(long id);
-        List<Site> List();
-        Site Create(Site site);
-    }
+    Site Get(long id);
+    List<Site> List();
+    Site Create(Site site);
 }

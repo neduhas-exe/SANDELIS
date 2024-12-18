@@ -1,3 +1,2 @@
 Id,CustomerType,Name,CompanyCode,VATCode,LegalAddress,ContactPersonName,ContactEmail,ContactPhone,CreditLimit,IsActive,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy
-1,Company,"UAB ""Statybų Ekspertai""",123456789,LT123456789,"Verkių g. 1, Vilnius",Jonas Jonaitis,jonas@statybuekspertai.lt,+37061234567,10000.00,True,12/18/2024 19:55:14,system,12/18/2024 19:55:14,system
 2,Individual,Petras Petraitis,,,"Gedimino pr. 15, Vilnius",Petras Petraitis,petras@gmail.com,+37062345678,1000.00,True,12/18/2024 19:55:14,system,12/18/2024 19:55:14,system

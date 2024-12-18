@@ -1,57 +1,38 @@
-using Application.Services.Interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.Controllers
+[ApiController]
+[Route("api/[controller]")]
+public class SitesController : ControllerBase
 {
-    /// <summary>
-    /// Kontroleris skirtas objektų (Site) valdymui
-    /// </summary>
-    [ApiController]  // Žymi, kad tai yra API kontroleris
-    [Route("sites")]  // API endpoint pradžia, pvz: /sites
-    public class SitesController : Controller
+    private readonly ISiteRepository _siteRepository;
+
+    public SitesController(ISiteRepository siteRepository)
     {
-        private readonly ISitesService _sitesService;
+        _siteRepository = siteRepository;
+    }
 
-        /// <summary>
-        /// Konstruktorius su dependency injection
-        /// </summary>
-        /// <param name="sitesService">Objektų serviso implementacija</param>
-        public SitesController(ISitesService sitesService)
-        {
-            _sitesService = sitesService;
-        }
+    [HttpGet("{id}")]
+    public IActionResult Get(long id)
+    {
+        var site = _siteRepository.Get(id);
+        if (site == null)
+            return NotFound();
 
-        /// <summary>
-        /// Gauti konkretų objektą pagal ID
-        /// </summary>
-        /// <param name="id">Objekto ID</param>
-        /// <returns>Objekto informacija</returns>
-        [HttpGet("{id}")]  // GET /sites/{id}
-        public IActionResult Get(long id)
-        {
-            var site = _sitesService.Get(id);
-            return Ok(site);  // Grąžina 200 OK su objekto duomenimis
-        }
+        return Ok(site);
+    }
 
-        /// <summary>
-        /// Gauti visų objektų sąrašą
-        /// </summary>
-        /// <returns>Objektų sąrašas</returns>
-        [HttpGet]  // GET /sites
-        public IActionResult List()
-        {
-            var sites = _sitesService.List();
-            return Ok(sites);  // Grąžina 200 OK su objektų sąrašu
-        }
+    [HttpGet]
+    public IActionResult List()
+    {
+        var sites = _siteRepository.List();
+        return Ok(sites);
+    }
 
-        // ... existing code ...
-
-        [HttpPost]  // POST /sites
-        public IActionResult Create(Domain.Models.Site site)  // Change parameter type to Domain.Models.Site
-        {
-            var newSite = _sitesService.Create(site);
-            return Ok(newSite);  // Grąžina 200 OK su sukurto objekto duomenimis
-        }
+    [HttpPost]
+    public IActionResult Create(Site site)
+    {
+        var newSite = _siteRepository.Create(site);
+        return CreatedAtAction(nameof(Get), new { id = newSite.Id }, newSite);
     }
 }

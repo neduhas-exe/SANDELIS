@@ -7,14 +7,10 @@ namespace Presentation.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserController : ControllerBase
+public class UsersController(IUserService userService) : ControllerBase
 {
-    private readonly IUserService _userService;
-
-    public UserController(IUserService userService)
-    {
-        _userService = userService;
-    }
+    private readonly string _csvFilePath = "Data/users.csv";
+    private IUserService _userService = userService;
 
     [HttpGet("{id}")]
     public IActionResult Get(long id)

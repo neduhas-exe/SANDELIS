@@ -8,6 +8,8 @@ public enum SubCategories
     OptikoKabeliai = 2,
     KoaksialinisKabeliai = 3,
     ValdymoKabeliai = 4,
+    PowerTools = 5,
+    OutdoorLighting = 6,
     
     // Add more subcategories as needed
 }

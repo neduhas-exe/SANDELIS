@@ -1,0 +1,3 @@
+Id,CustomerId,Name,Address,ContactPerson,ContactPhone,IsActive,Id,CustomerType,Name,CompanyCode,VATCode,LegalAddress,ContactPersonName,ContactEmail,ContactPhone,CreditLimit,IsActive,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy
+1,1,Statybvietė Vilnius,"Kalvarijų g. 100, Vilnius",Marius Mariukas,+37061111111,True,0,FizinisAsmuo,,,,,,,,0,False,01/01/0001 00:00:00,,,,12/18/2024 19:55:14,system,12/18/2024 19:55:14,system
+2,1,Statybvietė Kaunas,"Savanorių pr. 50, Kaunas",Tomas Tomukas,+37062222222,True,0,FizinisAsmuo,,,,,,,,0,False,01/01/0001 00:00:00,,,,12/18/2024 19:55:14,system,12/18/2024 19:55:14,system

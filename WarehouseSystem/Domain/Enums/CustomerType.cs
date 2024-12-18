@@ -10,6 +10,8 @@ public enum CustomerType
     UAB = 4,
     IndividualiVeikla = 5,
     MB = 6,
-    AB = 7
+    AB = 7,
+    Individual = 8,
+    Company = 9,
 }
 

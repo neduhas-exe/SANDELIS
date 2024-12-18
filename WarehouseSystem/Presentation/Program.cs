@@ -7,6 +7,8 @@ using Infrastructure.Repositories.Interfaces;
 using Infrastructure.Services;
 using ICurrentUserService = Domain.Interfaces.ICurrentUserService;
 using CurrentUserService = Application.Services.CurrentUserService;
+using Infrastructure.Initialization;
+using Infrastructure.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,7 @@ var usersFilePath = builder.Configuration.GetValue<string>("FileStorage:UsersFil
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.BootstrapApplication();
 
 // Bootstrap application services
 builder.Services.BootstrapApplication();
@@ -39,6 +42,10 @@ builder.Services.AddScoped<IUserRepository>(sp => new UserRepository(usersFilePa
 
 // Build the application AFTER registering all services
 var app = builder.Build();
+
+// Initialize the database before the application starts
+DatabaseInitializer.InitializeDatabase();
+_ = CsvConfig.Paths.Products; // This will trigger the static constructor and create necessary directories
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

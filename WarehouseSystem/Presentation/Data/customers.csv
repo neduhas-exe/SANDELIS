@@ -1,2 +1,3 @@
 Id,CustomerType,Name,CompanyCode,VATCode,LegalAddress,ContactPersonName,ContactEmail,ContactPhone,CreditLimit,IsActive,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy
 2,Individual,Petras Petraitis,,,"Gedimino pr. 15, Vilnius",Petras Petraitis,petras@gmail.com,+37062345678,1000.00,True,12/18/2024 19:55:14,system,12/18/2024 19:55:14,system
+3,FizinisAsmuo,string,string,string,string,string,string,string,0,True,12/19/2024 09:11:19,string,12/19/2024 09:11:19,string

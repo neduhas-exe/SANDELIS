@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using System.ComponentModel.DataAnnotations;  // Pridėkite šį using
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Models;
 
@@ -22,7 +22,14 @@ public class Site : AuditableEntity
 
     public bool IsActive { get; set; } = true;
 
-    // Pakeičiame navigacijos property
+    public string Comments { get; set; } = string.Empty;
+
+    public DateTime? LastCommentDate { get; set; }
+
+    public decimal? TotalProductValue { get; set; }
+
+    public int? TotalProductCount { get; set; }
+
     [JsonIgnore]
-    public virtual Customer? Customer { get; set; }  // Pridėjome virtual ir padarėme nullable (?)
+    public virtual Customer? Customer { get; set; }
 }

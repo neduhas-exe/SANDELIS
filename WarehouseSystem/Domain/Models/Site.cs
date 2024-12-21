@@ -30,6 +30,8 @@ public class Site : AuditableEntity
 
     public int? TotalProductCount { get; set; }
 
+    public virtual ICollection<SiteHistory> History { get; set; } = new List<SiteHistory>();
+
     [JsonIgnore]
     public virtual Customer? Customer { get; set; }
 }

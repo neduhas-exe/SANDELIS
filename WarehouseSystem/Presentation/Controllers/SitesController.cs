@@ -1,6 +1,7 @@
 using Domain.Models;
 using Infrastructure.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Infrastructure.Repositories.Interfaces;
 
 [ApiController]
 [Route("api/[controller]")]

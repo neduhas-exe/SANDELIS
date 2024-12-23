@@ -1,11 +1,10 @@
 ﻿using Domain.Models;
 
-namespace Infrastructure.Repositories.Interfaces
+namespace Infrastructure.Repositories.Interfaces;
+
+public interface IProductsRepository
 {
-    public interface IProductsRepository
-    {
-        public Product Get(long id);
-        public List<Product> List();
-        public Product Create(Product product);
-    }
+    public Product Get(long id);
+    public List<Product> List();
+    public Product Create(Product product);
 }

@@ -5,42 +5,42 @@ using System.Globalization;
 
 namespace Infrastructure.Repositories;
 
-public class ProductsRepository : IProductsRepository
+public class CustomersRepository : ICustomersRepository
 {
-    private const string _filePath = "C:\\Test\\products.csv";
+    private const string _filePath = "C:\\Test\\customers.csv";
 
-    public Product Get(long id)
+    public Customer Get(long id)
     {
         using var reader = new StreamReader(_filePath);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-        var products = csv.GetRecords<Product>().ToList();
+        var customers = csv.GetRecords<Customer>().ToList();
 
-        return products.FirstOrDefault(product => product.Id == id);
+        return customers.FirstOrDefault(customer => customer.Id == id);
     }
 
-    public List<Product> List()
+    public List<Customer> List()
     {
         using var reader = new StreamReader(_filePath);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-        var products = csv.GetRecords<Product>().ToList();
+        var customers = csv.GetRecords<Customer>().ToList();
 
-        return products;
+        return customers;
     }
 
-    public Product Create(Product product)
+    public Customer Create(Customer customer)
     {
         using var writer = new StreamWriter(_filePath, append: true);
         using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
         if (new FileInfo(_filePath).Length == 0)
         {
-            csv.WriteHeader<Product>();
+            csv.WriteHeader<Customer>();
             csv.NextRecord();
         }
 
-        csv.WriteRecord(product);
+        csv.WriteRecord(customer);
         csv.NextRecord();
 
-        return product;
+        return customer;
     }
 }

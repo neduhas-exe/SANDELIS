@@ -2,16 +2,15 @@
 using Domain.Models;
 using Infrastructure.Repositories.Interfaces;
 
-namespace Application.Services
+namespace Application.Services;
+
+public class ProductsService(IProductsRepository productsRepository) : IProductsService
 {
-    public class ProductsService(IProductsRepository productsRepository) : IProductsService
-    {
-        private readonly IProductsRepository _productsRepository = productsRepository;
+    private readonly IProductsRepository _productsRepository = productsRepository;
 
-        public Product Get(long id) => _productsRepository.Get(id);
+    public Product Get(long id) => _productsRepository.Get(id);
 
-        public List<Product> List() => _productsRepository.List();
+    public List<Product> List() => _productsRepository.List();
 
-        public Product Create(Product product) => _productsRepository.Create(product);
-    }
+    public Product Create(Product product) => _productsRepository.Create(product);
 }

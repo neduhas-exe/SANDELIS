@@ -5,42 +5,42 @@ using System.Globalization;
 
 namespace Infrastructure.Repositories;
 
-public class ProductsRepository : IProductsRepository
+public class SitesRepository : ISitesRepository
 {
-    private const string _filePath = "C:\\Test\\products.csv";
+    private const string _filePath = "C:\\Test\\sites.csv";
 
-    public Product Get(long id)
+    public Site Get(long id)
     {
         using var reader = new StreamReader(_filePath);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-        var products = csv.GetRecords<Product>().ToList();
+        var sites = csv.GetRecords<Site>().ToList();
 
-        return products.FirstOrDefault(product => product.Id == id);
+        return sites.FirstOrDefault(site => site.Id == id);
     }
 
-    public List<Product> List()
+    public List<Site> List()
     {
         using var reader = new StreamReader(_filePath);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-        var products = csv.GetRecords<Product>().ToList();
+        var sites = csv.GetRecords<Site>().ToList();
 
-        return products;
+        return sites;
     }
 
-    public Product Create(Product product)
+    public Site Create(Site site)
     {
         using var writer = new StreamWriter(_filePath, append: true);
         using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
         if (new FileInfo(_filePath).Length == 0)
         {
-            csv.WriteHeader<Product>();
+            csv.WriteHeader<Site>();
             csv.NextRecord();
         }
 
-        csv.WriteRecord(product);
+        csv.WriteRecord(site);
         csv.NextRecord();
 
-        return product;
+        return site;
     }
 }

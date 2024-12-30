@@ -13,5 +13,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IProductsService, ProductsService>();
         services.AddTransient<ISitesService, SitesService>();
         services.AddInfrastructure();
+        
     }
 }
+

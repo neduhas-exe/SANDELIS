@@ -1,4 +1,6 @@
 using Application.Extensions;
+using Application.Services.Interfaces;
+using Application.Services; // Add this using directive
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.BootstrapApplication();
+builder.Services.AddScoped<ICustomerSearchService, CustomerSearchService>();
 
 var app = builder.Build();
 
